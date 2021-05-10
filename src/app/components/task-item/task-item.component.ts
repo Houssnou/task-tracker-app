@@ -1,5 +1,5 @@
 import { Task } from '../../Task';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,6 +9,11 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 })
 export class TaskItemComponent implements OnInit {
   @Input() task: Task;
+  // tslint:disable-next-line: no-output-on-prefix
+  @Output() onDeleteTask: EventEmitter<Task> = new EventEmitter();
+  // tslint:disable-next-line: no-output-on-prefix
+  @Output() onToggleReminder: EventEmitter<Task> = new EventEmitter();
+
   faTimes = faTimes;
 
   constructor() { }
@@ -16,4 +21,11 @@ export class TaskItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onDelete(task: Task){
+    // console.log('delete task', task);
+    this.onDeleteTask.emit(task);
+  }
+  onToggle(task: Task){
+    this.onToggleReminder.emit(task);
+  }
 }
